@@ -1,0 +1,81 @@
+import java.util.*;
+class Wordle{
+    Scanner sc=new Scanner(System.in);
+    String word;
+    String guess;
+    int guess_number;
+    public void Wordle_rules(){
+        System.out.println("This is a 2-player game");
+        System.out.println("Player 1 has to enter a meaningful 5-letter word (with no letters repeated) without showing it to Player 2");
+        System.out.println("Player 2 will then get 6 chances to guess the word");
+        System.out.println("After every guess, hints will be provided to aid Player 2 in guessing the correct word");
+        System.out.println("You win the game if you're able to guess the correct word in 6 chances");
+        System.out.println();
+        System.out.println("Let's Begin!!");
+        System.out.println();
+    }
+    public void readWord(){
+        System.out.print("Player 1: Enter the 5-letter word that you wish for Player 2 to guess:");
+        word=sc.nextLine();
+        word=word.toLowerCase();
+        System.out.println();
+       // System.out.println("Player 2:");
+        while(word.length()!=5){
+            System.out.print("Please enter only a 5 letter word:");
+            word=sc.nextLine();
+        }
+    }
+    public void readGuess(){
+        System.out.print("Guess "+guess_number+": ");
+        guess=sc.nextLine();
+        guess = guess.toLowerCase();
+        System.out.println("Hints:");
+        while(guess.length()!=5){
+            System.out.println("Please enter only a 5 letter word");
+            guess=sc.nextLine();
+        }
+    }
+    public void playGame(){
+        for(guess_number=1;guess_number<=6;guess_number++){
+            readGuess();    
+            int count=0;
+                if(!checkWIN(guess, word)){
+                    for (int i = 0; i < word.length(); i++) {
+                        char c=guess.charAt(i);
+                        if (guess.charAt(i) == word.charAt(i)) {
+                            System.out.println("letter '" + guess.charAt(i) + "'at position " + (i+1) + " is present in the word at the same position");
+                        }
+                        else if(word.contains(String.valueOf(c))){
+                            System.out.println("letter '" + guess.charAt(i) + "' at position " + (i+1) + " is present in the word but not on the same position");
+                        }
+                        else{
+                            count++;
+                        }
+                        if(count==5){
+                                System.out.println("None of the letters of your guess are present in the word");
+                            }
+        }    
+    }
+        if(checkWIN(guess,word)){
+            System.out.println("CONGRATULATIONS! YOU WON");
+            return;
+        }
+        }
+        System.out.println("SORRY! You lost. The correct word is: "+word);
+    }
+    
+    public boolean checkWIN(String guess,String word){
+       if(guess.equals(word)==true){
+            return true;
+       }
+            return false;
+    }
+}
+public class Wordle_project {
+    public static void main(String[] args) {
+        Wordle w1=new Wordle();
+        w1.Wordle_rules();
+        w1.readWord();
+        w1.playGame();
+        }
+    }
